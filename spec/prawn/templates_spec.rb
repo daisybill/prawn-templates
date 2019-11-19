@@ -238,6 +238,15 @@ describe Prawn::Templates do
         expect(hash[hash.trailer[:Info]].keys.include?(k)).to eq true
       end
     end
+
+    context 'it is created with malformed blank page' do
+      it 'renders successfuly' do
+        filename = "#{DATADIR}/pdfs/corrupt_blank_page.pdf"
+        pdf = Prawn::Document.new(template: filename)
+
+        expect(StringIO.new(pdf.render).read[0, 8]).to eq '%PDF-1.5'
+      end
+    end
   end
 
   describe 'Document#start_new_page with :template option' do
