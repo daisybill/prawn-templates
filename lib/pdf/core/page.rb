@@ -85,7 +85,9 @@ module PDF
           dictionary.data[:Parent] = document.state.store.pages
         end
 
-        unless dictionary.data[:Contents].is_a?(Array) # content only on leafs
+        if !dictionary.data[:Contents]
+          @content = document.ref({})
+        elsif !dictionary.data[:Contents].is_a?(Array)
           @content = dictionary.data[:Contents].identifier
         end
 
